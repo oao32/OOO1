@@ -1,11 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import {
-  Activity, ArrowLeft, BarChart3, Bell, Check, Clock3, Droplets, Dumbbell, Eye, EyeOff,
-  Flame, Info, Languages, LayoutDashboard, LogOut, Menu, MessageSquare, Moon, Pencil,
-  Play, Plus, RotateCcw, Save, Scale, ShieldCheck, Sparkles, Sun, Target, Timer, Trash2,
-  TrendingUp, UserPlus, Users, X, Youtube, Zap,
+  Activity, ArrowLeft, BarChart3, Check, Droplets, Dumbbell, Eye, EyeOff, Flame,
+  Languages, LayoutDashboard, LogOut, Menu, Moon, Pencil, Plus, Scale, ShieldCheck,
+  Sparkles, Sun, Target, Trash2, TrendingUp, UserPlus, Users, X, Zap,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import MemberDashboard from '@/components/MemberDashboard';
 
 type Profile = { id: string; full_name: string; role: 'member' | 'admin' };
 type Subscriber = { id: string; user_id: string; full_name: string; phone: string; weight: number; height: number; muscle_mass: number; body_fat: number; subscription_start: string; duration_days: number; plan_name: string; notes: string; training_protocol: string; coach_notice: string; youtube_url: string };
@@ -55,10 +55,10 @@ function App() {
   if (loading) return <div className="app-shell dark min-h-screen grid place-items-center"><div className="text-center"><div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-orange-500 border-t-transparent" /><p className="text-slate-400">جاري تجهيز بوابتك الخاصة...</p></div></div>;
   return <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={`app-shell ${theme}`}><Header theme={theme} setTheme={setTheme} language={language} setLanguage={setLanguage} session={session} profile={profile} setView={setView} onSignOut={signOut} />
     {notice && <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-2xl border border-orange-400/30 bg-[#14243f] px-4 py-3 text-sm text-white shadow-2xl"><Check size={17} className="text-orange-400" />{notice}<button onClick={() => setNotice('')}><X size={16} /></button></div>}
-    {view === 'home' && !session && <Landing onAuth={() => setView('dashboard')} language={language} />}
+    {view === 'home' && !session && <Landing onAuth={() => setView('dashboard')} />}
     {view === 'dashboard' && !session && <AuthCard onSuccess={(nextSession) => { setSession(nextSession); }} />}
     {view === 'dashboard' && session && <MemberDashboard subscriber={subscriber} profile={profile} logs={logs} refresh={() => loadUser(session)} setNotice={setNotice} language={language} />}
-    {view === 'admin' && session && profile?.role === 'admin' && <AdminDashboard members={members} refresh={refreshMembers} setNotice={setNotice} language={language} />}
+    {view === 'admin' && session && profile?.role === 'admin' && <AdminDashboard members={members} refresh={refreshMembers} setNotice={setNotice} />}
     {view === 'admin' && session && profile?.role !== 'admin' && <MemberDashboard subscriber={subscriber} profile={profile} logs={logs} refresh={() => loadUser(session)} setNotice={setNotice} language={language} />}
   </div>;
 }
@@ -79,7 +79,7 @@ function AuthCard({ onSuccess }: { onSuccess: (session: import('@supabase/supaba
   return <main className="container-wide grid min-h-[calc(100vh-80px)] place-items-center py-12"><form onSubmit={submit} className="glass w-full max-w-md rounded-[30px] p-7 sm:p-9"><div className="mb-8 text-center"><div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-orange-500/15 text-orange-500"><ShieldCheck /></div><h1 className="text-2xl font-extrabold">{mode === 'signin' ? 'مرحباً بعودتك' : 'أنشئ حسابك الخاص'}</h1><p className="mt-2 text-sm text-[var(--text-muted)]">ادخل إلى مساحتك التدريبية في OAO</p></div>{mode === 'signup' && <label className="mb-4 block text-sm font-semibold">الاسم الكامل<input required value={name} onChange={(e) => setName(e.target.value)} placeholder="مثال: عبدالرحمن محمد" className="mt-2" /></label>}<label className="mb-4 block text-sm font-semibold">البريد الإلكتروني<input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="mt-2 text-left" dir="ltr" /></label><label className="block text-sm font-semibold">كلمة المرور<div className="relative mt-2"><input required minLength={6} type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="6 أحرف على الأقل" className="pl-12 text-left" dir="ltr" /><button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-3 top-3 text-[var(--text-muted)]">{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div></label>{error && <p className="mt-4 rounded-xl bg-red-500/10 p-3 text-sm text-red-400">{error}</p>}<button disabled={busy} className="orange-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 font-bold text-white disabled:opacity-60">{busy ? 'جاري التحقق...' : mode === 'signin' ? 'دخول إلى حسابي' : 'إنشاء الحساب'} <ArrowLeft size={18} /></button><button type="button" onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(''); }} className="mt-5 w-full text-center text-sm text-[var(--text-muted)] hover:text-orange-500">{mode === 'signin' ? 'ليس لديك حساب؟ أنشئ حساباً' : 'لديك حساب مسبقاً؟ سجل الدخول'}</button></form></main>;
 }
 
-function MemberDashboard({ subscriber, profile, logs, refresh, setNotice }: { subscriber: Subscriber | null; profile: Profile | null; logs: ProgressLog[]; refresh: () => Promise<void>; setNotice: (v: string) => void }) {
+export function LegacyMemberDashboard({ subscriber, profile, logs, refresh, setNotice }: { subscriber: Subscriber | null; profile: Profile | null; logs: ProgressLog[]; refresh: () => Promise<void>; setNotice: (v: string) => void }) {
   const [water, setWater] = useState(logs[0]?.water_liters ?? 0); const [saving, setSaving] = useState(false); const [showLog, setShowLog] = useState(false); const [form, setForm] = useState({ weight: subscriber?.weight ?? 0, water_liters: water, completed_exercises: 0, notes: '' });
   const bmi = subscriber?.height && subscriber.weight ? (subscriber.weight / ((subscriber.height / 100) ** 2)).toFixed(1) : '—'; const remaining = subscriber ? daysRemaining(subscriber.subscription_start, subscriber.duration_days) : 0; const progress = subscriber ? Math.min(100, Math.round((remaining / subscriber.duration_days) * 100)) : 0;
   async function saveLog(event: FormEvent) { event.preventDefault(); if (!subscriber) return; setSaving(true); const { error } = await supabase.from('progress_logs').insert({ subscriber_id: subscriber.id, weight: Number(form.weight), water_liters: Number(form.water_liters), completed_exercises: Number(form.completed_exercises), notes: form.notes }); if (error) setNotice(friendlyError()); else { setNotice('تم حفظ تقدمك اليومي بنجاح.'); setShowLog(false); await refresh(); } setSaving(false); }

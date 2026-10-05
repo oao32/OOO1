@@ -58,6 +58,8 @@ button { cursor: pointer; }
 .nav-link { display: inline-flex; align-items: center; gap: .5rem; border-radius: 12px; padding: .55rem .9rem; font-size: .875rem; font-weight: 700; color: var(--text-main); transition: .2s ease; }
 .nav-link:hover { color: #f26a21; background: rgba(242,106,33,.08); }
 .nav-cta { display: inline-flex; align-items: center; gap: .4rem; border-radius: 12px; padding: .55rem 1.1rem; font-size: .85rem; font-weight: 800; color: #fff; background: linear-gradient(135deg, #f26a21, #ff8a3d); box-shadow: 0 8px 24px rgba(242,106,33,.25); transition: .2s ease; }
+.lang-button { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--line); border-radius: 12px; padding: .55rem .75rem; color: var(--text-main); background: color-mix(in srgb, var(--panel-strong) 70%, transparent); font-size: .78rem; font-weight: 800; transition: .2s ease; }
+.lang-button:hover { border-color: rgba(242,106,33,.5); color: #f26a21; }
 .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(242,106,33,.35); }
 .icon-button { display: inline-grid; place-items: center; height: 42px; width: 42px; border-radius: 12px; border: 1px solid var(--line); color: var(--text-main); background: color-mix(in srgb, var(--panel-strong) 70%, transparent); transition: .2s ease; }
 .icon-button:hover { color: #f26a21; border-color: rgba(242,106,33,.4); }
