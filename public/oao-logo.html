@@ -3,56 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Own Aura Outcome — Logo</title>
+  <meta name="theme-color" content="#030711" />
+  <title>Own Aura Outcome — 3D Logo</title>
   <style>
-    :root { --orange: #f26a21; --blue: #071225; --muted: #8b9bb5; }
+    :root { --orange: #ed651b; --navy: #07152e; --blue: #173f80; --silver: #bcc7d8; }
     * { box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(242,106,33,.13), transparent 25%),
-        radial-gradient(circle at 20% 80%, rgba(35,72,140,.22), transparent 35%),
-        linear-gradient(145deg, #020713, #0b172d 60%, #040914);
-    }
-    .logo-scene { position: relative; width: min(92vw, 620px); aspect-ratio: 1; display: grid; place-items: center; perspective: 900px; }
-    .logo-scene::before { content: ''; position: absolute; inset: 9%; border: 1px solid rgba(255,255,255,.06); border-radius: 50%; box-shadow: 0 0 100px rgba(242,106,33,.12); }
-    .glow { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(242,106,33,.5), transparent 68%); filter: blur(38px); animation: breathe 3s ease-in-out infinite; }
-    .orbit { position: absolute; border: 1px solid rgba(242,106,33,.28); border-radius: 50%; transform: rotateX(66deg) rotateY(12deg); }
-    .orbit::after { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 18px var(--orange); }
-    .orbit.one { width: 62%; height: 34%; animation: orbit-one 11s linear infinite; }
-    .orbit.two { width: 78%; height: 43%; border-color: rgba(57,189,248,.25); animation: orbit-two 16s linear infinite reverse; }
-    .orbit.two::after { background: #39bdf8; box-shadow: 0 0 18px #39bdf8; }
-    .orbit.three { width: 92%; height: 52%; border-color: rgba(167,139,250,.22); animation: orbit-three 22s linear infinite; }
-    .orbit.three::after { background: #a78bfa; box-shadow: 0 0 18px #a78bfa; }
-    .logo-card { position: relative; z-index: 3; width: 42%; aspect-ratio: 1; padding: 8px; border-radius: 31%; transform-style: preserve-3d; animation: float 6s ease-in-out infinite; background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(242,106,33,.18)); box-shadow: 0 30px 90px rgba(0,0,0,.62), 0 0 55px rgba(242,106,33,.35); }
-    .logo-card::before { content: ''; position: absolute; inset: -7px; z-index: -1; border-radius: 32%; border: 1px solid rgba(242,106,33,.6); box-shadow: inset 0 0 18px rgba(242,106,33,.25); }
-    .logo-card img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 25%; }
-    .caption { position: absolute; bottom: 7%; display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: bold; letter-spacing: .22em; }
-    .caption::before, .caption::after { content: ''; width: 44px; height: 1px; background: var(--orange); box-shadow: 0 0 8px var(--orange); }
-    @keyframes breathe { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.16); } }
-    @keyframes float { 0%,100% { transform: translateY(0) rotateX(0) rotateY(0); } 50% { transform: translateY(-14px) rotateX(5deg) rotateY(-4deg); } }
-    @keyframes orbit-one { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(360deg); } }
-    @keyframes orbit-two { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(-360deg); } }
-    @keyframes orbit-three { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(360deg); } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+    body { min-height: 100vh; margin: 0; overflow: hidden; display: grid; place-items: center; color: #fff; font-family: Arial, Tahoma, sans-serif; background: #030711; }
+    body::before { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .25; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(circle, #000 0%, transparent 72%); }
+    .stage { position: relative; width: min(94vw, 760px); height: min(94vh, 760px); display: grid; place-items: center; perspective: 1200px; }
+    .stage::before { content: ''; position: absolute; width: 52%; height: 24%; bottom: 11%; border-radius: 50%; background: rgba(0,0,0,.82); filter: blur(34px); transform: rotateX(70deg); animation: shadow-pulse 5s ease-in-out infinite; }
+    .ambient { position: absolute; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(237,101,27,.26), transparent 65%); filter: blur(35px); animation: ambient-breathe 4s ease-in-out infinite; }
+    .light-beam { position: absolute; width: 22%; height: 76%; opacity: .2; background: linear-gradient(90deg, transparent, var(--orange), transparent); filter: blur(35px); transform: rotate(38deg); animation: light-sweep 7s ease-in-out infinite; }
+    .logo-wrap { position: relative; z-index: 5; width: min(62vw, 430px); aspect-ratio: 1; transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .18s ease-out; animation: levitate 6s ease-in-out infinite; }
+    .logo-wrap::before, .logo-wrap::after { content: ''; position: absolute; inset: 4%; border-radius: 31%; pointer-events: none; }
+    .logo-wrap::before { z-index: -3; background: linear-gradient(145deg, #20345a, #050b19 48%, #172e5c); transform: translateZ(-48px) translate(12px, 18px); box-shadow: 22px 28px 40px rgba(0,0,0,.65); }
+    .logo-wrap::after { z-index: -2; border: 2px solid rgba(237,101,27,.64); transform: translateZ(-24px) translate(6px, 9px); filter: drop-shadow(0 0 16px rgba(237,101,27,.34)); }
+    .logo-frame { position: absolute; inset: 0; overflow: hidden; padding: 11px; border: 1px solid rgba(255,255,255,.42); border-radius: 31%; background: linear-gradient(145deg, rgba(255,255,255,.45), rgba(237,101,27,.16) 36%, rgba(5,12,28,.88) 80%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.13), inset -16px -18px 28px rgba(0,0,0,.4), 0 0 60px rgba(237,101,27,.28); transform: translateZ(28px); }
+    .logo-frame::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.48), transparent 24%, transparent 72%, rgba(0,0,0,.35)); mix-blend-mode: screen; }
+    .logo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 24%; }
+    .ring { position: absolute; z-index: 1; left: 50%; top: 50%; border: 1px solid rgba(237,101,27,.38); border-radius: 50%; transform-style: preserve-3d; pointer-events: none; }
+    .ring::before { content: ''; position: absolute; left: 50%; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 18px 4px rgba(237,101,27,.8); }
+    .ring-a { width: 122%; height: 48%; transform: translate(-50%, -50%) rotateX(67deg) rotateZ(12deg) translateZ(16px); animation: ring-a 12s linear infinite; }
+    .ring-b { width: 145%; height: 58%; border-color: rgba(72,167,255,.3); transform: translate(-50%, -50%) rotateX(68deg) rotateY(18deg) translateZ(-5px); animation: ring-b 18s linear infinite reverse; }
+    .ring-b::before { background: #48a7ff; box-shadow: 0 0 18px 4px rgba(72,167,255,.75); }
+    .ring-c { width: 164%; height: 68%; border-color: rgba(189,203,226,.22); transform: translate(-50%, -50%) rotateX(70deg) rotateZ(-18deg) translateZ(-18px); animation: ring-c 23s linear infinite; }
+    .badge { position: absolute; z-index: 7; right: -14%; bottom: 7%; padding: 11px 15px; border: 1px solid rgba(237,101,27,.5); border-radius: 12px; background: rgba(5,12,28,.8); box-shadow: 0 12px 28px rgba(0,0,0,.45), 0 0 20px rgba(237,101,27,.18); transform: translateZ(70px); text-align: center; backdrop-filter: blur(12px); }
+    .badge strong { display: block; color: var(--orange); font-size: 12px; letter-spacing: .18em; }
+    .badge span { display: block; margin-top: 4px; color: var(--silver); font-size: 9px; letter-spacing: .22em; }
+    .caption { position: absolute; z-index: 8; bottom: 3%; display: flex; align-items: center; gap: 13px; color: #8d9bb3; font-size: 11px; font-weight: 700; letter-spacing: .28em; }
+    .caption i { display: block; width: 46px; height: 1px; background: var(--orange); box-shadow: 0 0 10px var(--orange); }
+    @keyframes levitate { 0%, 100% { translate: 0 0; } 50% { translate: 0 -13px; } }
+    @keyframes ambient-breathe { 0%, 100% { opacity: .6; scale: 1; } 50% { opacity: .95; scale: 1.16; } }
+    @keyframes shadow-pulse { 0%, 100% { scale: 1; opacity: .7; } 50% { scale: .8; opacity: .42; } }
+    @keyframes light-sweep { 0%, 100% { translate: -180px 0; opacity: 0; } 45% { opacity: .3; } 70% { translate: 180px 0; opacity: 0; } }
+    @keyframes ring-a { to { rotate: 360deg; } }
+    @keyframes ring-b { to { rotate: -360deg; } }
+    @keyframes ring-c { to { rotate: 360deg; } }
+    @media (max-width: 560px) { .logo-wrap { width: min(72vw, 360px); } .badge { right: -7%; bottom: 2%; } .caption { bottom: 6%; font-size: 9px; } .ring-c { display: none; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
-  <main class="logo-scene" aria-label="Own Aura Outcome logo">
-    <div class="glow"></div>
-    <div class="orbit one"></div>
-    <div class="orbit two"></div>
-    <div class="orbit three"></div>
-    <div class="logo-card">
-      <img src="./WhatsApp_Image_2026-09-30_at_10.32.33_AM.jpeg" alt="Own Aura Outcome" />
+  <main class="stage" aria-label="شعار Own Aura Outcome بتصميم ثلاثي الأبعاد">
+    <div class="ambient"></div>
+    <div class="light-beam"></div>
+    <div class="logo-wrap" id="logo">
+      <div class="ring ring-a"></div>
+      <div class="ring ring-b"></div>
+      <div class="ring ring-c"></div>
+      <div class="logo-frame">
+        <img src="./WhatsApp_Image_2026-09-30_at_10.32.33_AM.jpeg" alt="Own Aura Outcome" />
+      </div>
+      <div class="badge"><strong>OWN AURA</strong><span>OUTCOME / 3D IDENTITY</span></div>
     </div>
-    <div class="caption">OWN AURA OUTCOME</div>
+    <div class="caption"><i></i>OWN AURA OUTCOME<i></i></div>
   </main>
+  <script>
+    const logo = document.getElementById('logo');
+    const stage = document.querySelector('.stage');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      stage.addEventListener('pointermove', (event) => {
+        const box = stage.getBoundingClientRect();
+        const x = (event.clientX - box.left) / box.width - 0.5;
+        const y = (event.clientY - box.top) / box.height - 0.5;
+        logo.style.setProperty('--ry', `${x * 16}deg`);
+        logo.style.setProperty('--rx', `${y * -14}deg`);
+      });
+      stage.addEventListener('pointerleave', () => {
+        logo.style.setProperty('--ry', '0deg');
+        logo.style.setProperty('--rx', '0deg');
+      });
+    }
+  </script>
 </body>
 </html>
