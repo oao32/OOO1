@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Own Aura Outcome — Logo</title>
+  <style>
+    :root { --orange: #f26a21; --blue: #071225; --muted: #8b9bb5; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(242,106,33,.13), transparent 25%),
+        radial-gradient(circle at 20% 80%, rgba(35,72,140,.22), transparent 35%),
+        linear-gradient(145deg, #020713, #0b172d 60%, #040914);
+    }
+    .logo-scene { position: relative; width: min(92vw, 620px); aspect-ratio: 1; display: grid; place-items: center; perspective: 900px; }
+    .logo-scene::before { content: ''; position: absolute; inset: 9%; border: 1px solid rgba(255,255,255,.06); border-radius: 50%; box-shadow: 0 0 100px rgba(242,106,33,.12); }
+    .glow { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(242,106,33,.5), transparent 68%); filter: blur(38px); animation: breathe 3s ease-in-out infinite; }
+    .orbit { position: absolute; border: 1px solid rgba(242,106,33,.28); border-radius: 50%; transform: rotateX(66deg) rotateY(12deg); }
+    .orbit::after { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 18px var(--orange); }
+    .orbit.one { width: 62%; height: 34%; animation: orbit-one 11s linear infinite; }
+    .orbit.two { width: 78%; height: 43%; border-color: rgba(57,189,248,.25); animation: orbit-two 16s linear infinite reverse; }
+    .orbit.two::after { background: #39bdf8; box-shadow: 0 0 18px #39bdf8; }
+    .orbit.three { width: 92%; height: 52%; border-color: rgba(167,139,250,.22); animation: orbit-three 22s linear infinite; }
+    .orbit.three::after { background: #a78bfa; box-shadow: 0 0 18px #a78bfa; }
+    .logo-card { position: relative; z-index: 3; width: 42%; aspect-ratio: 1; padding: 8px; border-radius: 31%; transform-style: preserve-3d; animation: float 6s ease-in-out infinite; background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(242,106,33,.18)); box-shadow: 0 30px 90px rgba(0,0,0,.62), 0 0 55px rgba(242,106,33,.35); }
+    .logo-card::before { content: ''; position: absolute; inset: -7px; z-index: -1; border-radius: 32%; border: 1px solid rgba(242,106,33,.6); box-shadow: inset 0 0 18px rgba(242,106,33,.25); }
+    .logo-card img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 25%; }
+    .caption { position: absolute; bottom: 7%; display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: bold; letter-spacing: .22em; }
+    .caption::before, .caption::after { content: ''; width: 44px; height: 1px; background: var(--orange); box-shadow: 0 0 8px var(--orange); }
+    @keyframes breathe { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.16); } }
+    @keyframes float { 0%,100% { transform: translateY(0) rotateX(0) rotateY(0); } 50% { transform: translateY(-14px) rotateX(5deg) rotateY(-4deg); } }
+    @keyframes orbit-one { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(360deg); } }
+    @keyframes orbit-two { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(-360deg); } }
+    @keyframes orbit-three { to { transform: rotateX(66deg) rotateY(12deg) rotateZ(360deg); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="logo-scene" aria-label="Own Aura Outcome logo">
+    <div class="glow"></div>
+    <div class="orbit one"></div>
+    <div class="orbit two"></div>
+    <div class="orbit three"></div>
+    <div class="logo-card">
+      <img src="./WhatsApp_Image_2026-09-30_at_10.32.33_AM.jpeg" alt="Own Aura Outcome" />
+    </div>
+    <div class="caption">OWN AURA OUTCOME</div>
+  </main>
+</body>
+</html>
